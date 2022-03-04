@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const Category = require("../models/category");
+const { categorySchema } = require("../validators/schema-validator");
 
 exports.fetchAllCategories = async (req, res, next) => {
   try {
@@ -20,12 +21,15 @@ exports.createCategory = async (req, res, next) => {
   const { name } = req.body;
 
   try {
-    const category = new Category({ name, addedBy: "Andry Pebrianto" });
+    const result = await categorySchema.validateAsync(req.body);
+    const category = new Category(result);
+    category.addedBy = "Andry Pebrianto";
     await category.save();
 
     res.status(201).json(category);
   } catch (error) {
     console.error(error);
+    error.isJoi === true ? (error.status = 422) : "";
     next(error);
   }
 };

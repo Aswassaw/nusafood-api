@@ -17,6 +17,7 @@
     "express": "^4.17.2",
     "helmet": "^5.0.2",
     "http-errors": "^2.0.0",
+    "joi": "^17.6.0",
     "mongoose": "^6.2.0"
   },
   "devDependencies": {
