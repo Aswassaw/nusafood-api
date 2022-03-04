@@ -13,10 +13,10 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    __v: {
-      type: Number,
-      select: false,
-    },
+    // __v: {
+    //   type: Number,
+    //   select: false,
+    // },
   },
   { timestamps: true }
 );
@@ -25,7 +25,7 @@ categorySchema.set("toJSON", {
   transform: function (doc, obj, options) {
     obj.id = obj._id;
     delete obj._id;
-    // delete obj.__v;
+    delete obj.__v;
   },
 });
 

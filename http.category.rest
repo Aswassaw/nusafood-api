@@ -1,3 +1,16 @@
+### get invalid route
+GET http://localhost:5000/api/categories2
+Accept: application/json
+
 ### get all categories
 GET http://localhost:5000/api/categories
 Accept: application/json
+
+### create a new category
+POST http://localhost:5000/api/categories
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Testing 2"
+}
