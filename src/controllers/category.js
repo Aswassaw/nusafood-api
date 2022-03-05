@@ -5,13 +5,13 @@ const { postCategoryValidation } = require("../validations/category");
 
 exports.fetchAllCategories = async (req, res, next) => {
   try {
-    const result = await Category.find({});
+    const categories = await Category.find({});
 
-    if (result.length === 0) {
+    if (categories.length === 0) {
       return next(createError(404, "No categories found"));
     }
 
-    res.status(200).json(result);
+    res.status(200).json(categories);
   } catch (error) {
     console.error(error);
     next(error);
@@ -21,8 +21,9 @@ exports.fetchAllCategories = async (req, res, next) => {
 exports.createCategory = async (req, res, next) => {
   try {
     const result = await postCategoryValidation.validateAsync(req.body);
-    const category = new Category(result);
-    category.addedBy = "Admin";
+
+    const category = new Category();
+    category.name = result.name;
     await category.save();
 
     res.status(201).json(category);
@@ -37,13 +38,56 @@ exports.fetchCategoryById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const result = await Category.findById(id);
+    const category = await Category.findById(id);
 
-    if (!result) {
+    if (!category) {
       return next(createError(404, "No category found"));
     }
 
-    res.status(200).json(result);
+    res.status(200).json(category);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid category Id"));
+    }
+    next(error);
+  }
+};
+
+exports.updateCategoryById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const result = await postCategoryValidation.validateAsync(req.body);
+
+    const category = await Category.findById(id);
+    if (!category) {
+      return next(createError(404, "No category found"));
+    }
+    category.name = result.name;
+    category.save();
+
+    res.status(200).json(category);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid category Id"));
+    }
+    next(error);
+  }
+};
+
+exports.deleteCategoryById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const category = await Category.findById(id);
+    if (!category) {
+      return next(createError(404, "No category found"));
+    }
+    category.remove();
+
+    res.status(200).json(category);
   } catch (error) {
     console.error(error);
     if (error instanceof mongoose.CastError) {

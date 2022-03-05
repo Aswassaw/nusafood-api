@@ -16,5 +16,18 @@ Accept: application/json
 }
 
 ### get category by id
-GET http://localhost:5000/api/categories/622248067f1afb4712c337c1s
+GET http://localhost:5000/api/categories/622248067f1afb4712c337c2
+Accept: application/json
+
+### update category by id
+PUT http://localhost:5000/api/categories/622248067f1afb4712c337c2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Dessert Update"
+}
+
+### delete category by id
+DELETE http://localhost:5000/api/categories/622248067f1afb4712c337c2
 Accept: application/json

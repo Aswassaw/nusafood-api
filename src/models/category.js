@@ -11,7 +11,7 @@ const categorySchema = new mongoose.Schema(
     },
     addedBy: {
       type: String,
-      required: true,
+      default: "Admin",
     },
     // __v: {
     //   type: Number,
