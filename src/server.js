@@ -25,6 +25,8 @@ app.get("/", (req, res) => {
 
 // category routes
 app.use(PREFIX, require("./routes/category"));
+// dish routes
+app.use(PREFIX, require("./routes/dish"));
 
 // 404 route
 app.use(async (req, res, next) => {
