@@ -35,7 +35,7 @@ app.use(async (req, res, next) => {
 app.use((err, req, res, next) => {
   let status = err.status || 500;
 
-  res.status(status).send({
+  res.status(status).json({
     error: {
       status,
       message: err.message || "Internal Server Error",

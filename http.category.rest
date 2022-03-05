@@ -12,5 +12,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Testing 2"
+  "name": "Dessert"
 }
+
+### get category by id
+GET http://localhost:5000/api/categories/622248067f1afb4712c337c1s
+Accept: application/json

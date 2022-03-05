@@ -1,3 +1,0 @@
-### root endpoint
-GET http://localhost:5000/
-Accept: application/json
