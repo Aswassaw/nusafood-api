@@ -21,9 +21,14 @@ exports.fetchAllCategories = async (req, res, next) => {
 exports.createCategory = async (req, res, next) => {
   try {
     const result = await postCategoryValidation.validateAsync(req.body);
+    const { name } = result;
 
-    const category = new Category();
-    category.name = result.name;
+    const categoryExist = await Category.findOne({ name });
+    if (categoryExist) {
+      return next(createError(404, `The category ${name} already exist`));
+    }
+
+    const category = new Category({ name });
     const newCategory = await category.save();
 
     res.status(201).json(newCategory);

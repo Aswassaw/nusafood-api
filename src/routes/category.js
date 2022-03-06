@@ -13,11 +13,11 @@ const router = express.Router();
 router.get("/categories", fetchAllCategories);
 // @POST    | Public     | /api/categories
 router.post("/categories", createCategory);
-// @GET     | Public     | /api/categories/id
+// @GET     | Public     | /api/categories/:id
 router.get("/categories/:id", fetchCategoryById);
-// @PUT     | Public     | /api/categories/id
+// @PUT     | Public     | /api/categories/:id
 router.put("/categories/:id", updateCategoryById);
-// @DELETE  | Public     | /api/categories/id
+// @DELETE  | Public     | /api/categories/:id
 router.delete("/categories/:id", deleteCategoryById);
 
 module.exports = router;

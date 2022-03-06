@@ -1,10 +1,6 @@
-# ### get invalid route
-# GET http://localhost:5000/api/categories2
-# Accept: application/json
-
-# ### get all categories
-# GET http://localhost:5000/api/categories
-# Accept: application/json
+### get all dishes
+GET http://localhost:5000/api/dishes
+Accept: application/json
 
 ### create a new dish
 POST http://localhost:5000/api/dishes
@@ -18,9 +14,9 @@ Accept: application/json
   "category": "622396b376629c4cb6070981"
 }
 
-# ### get category by id
-# GET http://localhost:5000/api/categories/622248067f1afb4712c337c2
-# Accept: application/json
+### get dish by id
+GET http://localhost:5000/api/dishes/622439574af467906fcd21b8
+Accept: application/json
 
 # ### update category by id
 # PUT http://localhost:5000/api/categories/622248067f1afb4712c337c2

@@ -1,12 +1,36 @@
 const mongoose = require("mongoose");
 const createError = require("http-errors");
 const Dish = require("../models/dish");
+const { postDishValidation } = require("../validations/dish");
+
+exports.fetchAllDishes = async (req, res, next) => {
+  try {
+    const dishes = await Dish.find({})
+      .select("-photo")
+      .populate("category", "_id, name");
+
+    if (dishes.length === 0) {
+      return next(createError(404, "No dishes found"));
+    }
+
+    res.status(200).json(dishes);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
 
 exports.createDish = async (req, res, next) => {
-  const { name, description, price, category, photo } = req.body;
-
   try {
-    let dish = new Dish({ name, description, price, category, photo });
+    const result = await postDishValidation.validateAsync(req.body);
+    const { name, description, price, category, photo } = result;
+
+    const dishExist = await Dish.findOne({ name });
+    if (dishExist) {
+      return next(createError(404, `The dish ${name} already exist`));
+    }
+
+    const dish = new Dish({ name, description, price, category, photo });
     savePhoto(dish, photo);
     const newDish = await dish.save();
     newDish.photo = undefined;
@@ -27,3 +51,25 @@ function savePhoto(dish, photo) {
     dish.photo.contentType = photo.type;
   }
 }
+
+exports.fetchDishById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const dish = await Dish.findById(id)
+      .select("-photo")
+      .populate("category", "_id, name");
+
+    if (!dish) {
+      return next(createError(404, "No dish found"));
+    }
+
+    res.status(200).json(dish);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid dish Id"));
+    }
+    next(error);
+  }
+};
