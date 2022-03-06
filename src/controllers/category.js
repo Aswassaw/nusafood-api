@@ -24,9 +24,9 @@ exports.createCategory = async (req, res, next) => {
 
     const category = new Category();
     category.name = result.name;
-    await category.save();
+    const newCategory = await category.save();
 
-    res.status(201).json(category);
+    res.status(201).json(newCategory);
   } catch (error) {
     console.error(error);
     error.isJoi === true ? (error.status = 422) : "";
@@ -65,7 +65,7 @@ exports.updateCategoryById = async (req, res, next) => {
       return next(createError(404, "No category found"));
     }
     category.name = result.name;
-    category.save();
+    await category.save();
 
     res.status(200).json(category);
   } catch (error) {
@@ -85,7 +85,7 @@ exports.deleteCategoryById = async (req, res, next) => {
     if (!category) {
       return next(createError(404, "No category found"));
     }
-    category.remove();
+    await category.remove();
 
     res.status(200).json(category);
   } catch (error) {

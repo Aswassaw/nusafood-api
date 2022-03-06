@@ -23,6 +23,10 @@ const dishSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    photo: {
+      data: Buffer,
+      contentType: String,
+    },
     addedBy: {
       type: String,
       default: "Admin",
