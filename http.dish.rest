@@ -30,3 +30,7 @@ Accept: application/json
 # ### delete category by id
 # DELETE http://localhost:5000/api/categories/622248067f1afb4712c337c2
 # Accept: application/json
+
+### get dish photo
+GET http://localhost:5000/api/dishes/622439574af467906fcd21b8/photo
+Accept: image/jpeg

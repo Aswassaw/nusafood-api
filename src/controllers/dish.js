@@ -73,3 +73,30 @@ exports.fetchDishById = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.fetchDishPhoto = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const dish = await Dish.findById(id).select("photo");
+
+    if (!dish) {
+      return next(createError(404, "No dish found"));
+    }
+
+    if (dish.photo.data) {
+      res.set("Content-Type", dish.photo.contentType);
+      res.send(dish.photo.data);
+    } else {
+      return res.status(204).json({ message: "No dish photo found" });
+    }
+
+    res.status(200).json(dish);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid dish Id"));
+    }
+    next(error);
+  }
+};

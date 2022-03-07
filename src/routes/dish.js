@@ -3,6 +3,7 @@ const {
   fetchAllDishes,
   createDish,
   fetchDishById,
+  fetchDishPhoto,
 } = require("../controllers/dish");
 
 const router = express.Router();
@@ -13,5 +14,7 @@ router.get("/dishes", fetchAllDishes);
 router.post("/dishes", createDish);
 // @GET     | Public     | /api/dishes/:id
 router.get("/dishes/:id", fetchDishById);
+// @GET     | Public     | /api/dishes/:id
+router.get("/dishes/:id/photo", fetchDishPhoto);
 
 module.exports = router;
