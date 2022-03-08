@@ -4,6 +4,7 @@ const cors = require("cors");
 const createError = require("http-errors");
 require("dotenv").config();
 require("./config/db").connectToDB();
+const chalk = require("chalk");
 
 const app = express();
 
@@ -48,5 +49,9 @@ app.use((err, req, res, next) => {
 
 // running server
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log(
+    `Server started on port ${PORT} with ${process.env.NODE_ENV} environment`
+  );
+  console.log(chalk`Visit {rgb(128, 237, 153) http://localhost:${PORT}}`);
+  console.log(chalk`Developed by {rgb(255, 92, 88) Andry Pebrianto}`);
 });
