@@ -4,6 +4,8 @@ const {
   createDish,
   fetchDishById,
   fetchDishPhoto,
+  updateDishById,
+  deleteDishById,
 } = require("../controllers/dish");
 
 const router = express.Router();
@@ -16,5 +18,9 @@ router.post("/dishes", createDish);
 router.get("/dishes/:id", fetchDishById);
 // @GET     | Public     | /api/dishes/:id
 router.get("/dishes/:id/photo", fetchDishPhoto);
+// @PUT     | Public     | /api/dishes/:id
+router.get("/dishes/:id/photo", updateDishById);
+// @DELETE     | Public     | /api/dishes/:id
+router.get("/dishes/:id/photo", deleteDishById);
 
 module.exports = router;

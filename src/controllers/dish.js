@@ -27,7 +27,7 @@ exports.createDish = async (req, res, next) => {
 
     const dishExist = await Dish.findOne({ name });
     if (dishExist) {
-      return next(createError(404, `The dish ${name} already exist`));
+      return next(createError(409, `The dish ${name} already exist`));
     }
 
     const dish = new Dish({ name, description, price, category, photo });
@@ -100,3 +100,38 @@ exports.fetchDishPhoto = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updateDishById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const result = await postDishValidation.validateAsync(req.body);
+    const { name, description, price, category, photo } = result;
+
+    const dish = await Dish.findById(id);
+    if (!dish) {
+      return next(createError(404, "No dish found"));
+    }
+    dish.name = name;
+    dish.description = description;
+    dish.price = price;
+    dish.category = category;
+
+    if (photo) {
+      savePhoto(dish, photo);
+    }
+
+    await dish.save();
+    dish.photo = undefined;
+
+    res.status(200).json(dish);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid category Id"));
+    }
+    next(error);
+  }
+};
+
+exports.deleteDishById = async (req, res, next) => {};

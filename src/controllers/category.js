@@ -25,7 +25,7 @@ exports.createCategory = async (req, res, next) => {
 
     const categoryExist = await Category.findOne({ name });
     if (categoryExist) {
-      return next(createError(404, `The category ${name} already exist`));
+      return next(createError(409, `The category ${name} already exist`));
     }
 
     const category = new Category({ name });
