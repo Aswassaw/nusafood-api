@@ -4,9 +4,8 @@
   "description": "API untuk NusaFood Client",
   "main": "server.js",
   "scripts": {
-    "prod": "node src/server.js",
-    "start": "env-cmd -f .env node server.js",
-    "dev": "env-cmd -f .env.local nodemon server.js"
+    "start": "node src/server.js",
+    "dev": "env-cmd -f .env.local nodemon src/server.js"
   },
   "author": "Andry Pebrianto",
   "license": "MIT",
