@@ -128,10 +128,28 @@ exports.updateDishById = async (req, res, next) => {
   } catch (error) {
     console.error(error);
     if (error instanceof mongoose.CastError) {
-      next(createError(400, "Invalid category Id"));
+      next(createError(400, "Invalid dish Id"));
     }
     next(error);
   }
 };
 
-exports.deleteDishById = async (req, res, next) => {};
+exports.deleteDishById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const dish = await Dish.findById(id);
+    if (!dish) {
+      return next(createError(404, "No dish found"));
+    }
+    await dish.remove();
+
+    res.status(200).json(dish);
+  } catch (error) {
+    console.error(error);
+    if (error instanceof mongoose.CastError) {
+      next(createError(400, "Invalid dish Id"));
+    }
+    next(error);
+  }
+};
